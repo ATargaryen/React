@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-function SingleItem(props) {
+
+export default function SingleItem(props) {
 
     const temp_style = {
       backgroundColor: '#FF0000',
@@ -13,9 +14,8 @@ function SingleItem(props) {
       setCounter(counter+1);
     };
     return ( <div>     
-       <h2>Hi, I am a Body!</h2>
-   
-
+       <h2>Single Item Template</h2>
+        
        <div className="item_template w-50" style={ temp_style }>
        <img src={props.item.src} onClick={ myfunction } alt="item_image" ></img>
         <h5 className="badge-primary " style={{ fontWeight : "bold", fontSize : 30 , fontFamily : 'serif' }}>{props.item.name}  {props.item.price }  </h5> 
@@ -27,12 +27,9 @@ function SingleItem(props) {
       );
 }
   
-  export default SingleItem;
-
-
-  function myfunction(){
-    alert('Hello JSX !')
-  }
+function myfunction(){
+  alert('Hello JSX !')
+}
 
 
 
