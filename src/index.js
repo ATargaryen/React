@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import 'bootstrap/dist/css/bootstrap.css'
+
 
 // this functio used to render component into html tag ...eq app to root div
 ReactDOM.render(<React.StrictMode> <App /> </React.StrictMode>, document.getElementById('root')
