@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 
-export default function SingleItem(props) {
+import { Card } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
-    const temp_style = {
-      backgroundColor: '#FF0000',
-    };
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartArrowDown, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+
+export default function SingleItem(props) {
 
 
    var [ counter , setCounter] = useState(0);
@@ -14,22 +16,16 @@ export default function SingleItem(props) {
       setCounter(counter+1);
     };
     return ( <div>     
-       <h2>Single Item Template</h2>
-        
-       <div className="item_template w-50" style={ temp_style }>
-       <img src={props.item.src} onClick={ myfunction } alt="item_image" ></img>
-        <h5 className="badge-primary " style={{ fontWeight : "bold", fontSize : 30 , fontFamily : 'serif' }}>{props.item.name}  {props.item.price }  </h5> 
-       </div>
-       
-       <h2 id="item_selected_lbl">{ counter  }</h2> <button className="btn btn-primary" onClick={ setCartCount } >Add To Cart</button> 
-      
-      </div>
-      );
+              <Card style={{ width: '18rem' }}>
+                <Card.Img variant="top" src={props.item.src} />
+                <Card.Body>
+                  <Card.Title>{props.item.name}</Card.Title>
+                  <Card.Text>
+                  <FontAwesomeIcon icon={  faRupeeSign }  color="black" />    {props.item.price } { counter  }
+                  </Card.Text>
+                  <Button onClick={ setCartCount } variant="primary">Add To Cart</Button>
+                </Card.Body>
+              </Card>
+                          
+      </div> );
 }
-  
-function myfunction(){
-  alert('Hello JSX !')
-}
-
-
-

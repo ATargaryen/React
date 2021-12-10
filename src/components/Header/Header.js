@@ -1,16 +1,75 @@
-import Cart from '../templates/cart-item';
+import Cart from '../templates/cart';
+import Store from '../templates/store';
+import Home from '../templates/home';
+import Login from '../templates/login';
+import BodyComponent from '../Body/Body';
+import { render } from "react-dom";
+import { Container } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import {
+  BrowserRouter as Router, 
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignInAlt , faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
 
 function Header() {
 
-  const navItems = ['Shop','Orders','Cart','Profile'];
-
   return ( <div >
-    <div className="bg-light" >
-      <h2 className="text-center" >Youngman Store</h2>
-      <div className="container d-flex" > { navItems.map( item => <a key={item }>{ item }</a>) } </div>
-    </div>
+  <Router>
+          <Container fluid className="bg-dark text-white">
+          <Row>
+            <Col className="p-3"  sm={4}  >
+              <h5 className="text-center" >Youngman Store</h5>
+            </Col>
+            <Col sm={6}  className="p-3 "  >
+                <div >
+                  <nav>
+                     <Link to="/Store" className="text-white">Store</Link> |{" "}
+                     <Link to="/Cart"  className="text-white" >Cart <FontAwesomeIcon icon={faCartArrowDown}  color="red  " />  </Link> |{" "}
+                     <Link to="/Orders" className="text-white">Orders</Link> |{" "}
+                     <Link to="/Profile" className="text-white">Profile</Link>
+                  </nav>
+                </div>
+           </Col>
+           <Col className="p-3"  sm={2} >
+           <Link to="/Login"> <FontAwesomeIcon size="2x" icon={faSignInAlt}  color="red  " />  </Link>
+            </Col>
+           </Row>
+          </Container>    
 
+      <Routes>
+      <Route path="/" element={ <Home /> }></Route>
+      <Route path="/Store" element={ <BodyComponent /> }></Route>
+      <Route path="/Cart" element={ <Cart /> }></Route>
+      <Route path="/Orders" element={ <Orders /> }></Route>
+      <Route path="/Profile" element={ <Profile /> }></Route>
+      <Route path="/Login" element={ <Login /> }></Route>
+      </Routes>
+
+    </Router>
   </div> ) ;
 }
 
 export default Header;
+
+
+function Profile(){
+  return ( <div>
+
+          <h2> This Profile Components </h2>
+
+  </div> );
+}
+function Orders(){
+  return ( <div>
+
+          <h2> This Orders Components </h2>
+
+  </div> );
+}
