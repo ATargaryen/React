@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Cart from '../templates/cart';
 
 export default function Cart(props) {
 
