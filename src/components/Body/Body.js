@@ -1,6 +1,5 @@
 import React, { useState , useEffect} from 'react';
 import ItemTemplate from '../templates/single-item';
-import Cart from '../templates/cart-item';
 
 export default function Body() {
     

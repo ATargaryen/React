@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartArrowDown, faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+import { faRupeeSign } from '@fortawesome/free-solid-svg-icons'
 
 export default function SingleItem(props) {
 

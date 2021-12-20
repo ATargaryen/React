@@ -1,6 +1,9 @@
 import './App.css';
 import HeaderComponent from './components/Header/Header';
 import FooterComponent from './components/Footer/Footer';
+import {
+  BrowserRouter as Router, 
+} from "react-router-dom";
 
 
 
@@ -8,9 +11,10 @@ import FooterComponent from './components/Footer/Footer';
 function App() {
   return (
     <div className="App">
-
+        <Router>
           <HeaderComponent />
           <FooterComponent />
+        </Router>
     </div>
   );
 }

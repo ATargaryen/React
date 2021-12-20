@@ -1,14 +1,12 @@
 import Cart from '../templates/cart';
-import Store from '../templates/store';
 import Home from '../templates/home';
 import Login from '../templates/login';
+import Checkout from '../templates/checkout';
 import BodyComponent from '../Body/Body';
-import { render } from "react-dom";
 import { Container } from 'react-bootstrap';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import {
-  BrowserRouter as Router, 
   Routes,
   Route,
   Link
@@ -21,7 +19,7 @@ import { faSignInAlt , faCartArrowDown } from '@fortawesome/free-solid-svg-icons
 function Header() {
 
   return ( <div >
-  <Router>
+          
           <Container fluid className="bg-dark text-white">
           <Row>
             <Col className="p-3"  sm={4}  >
@@ -50,9 +48,9 @@ function Header() {
       <Route path="/Orders" element={ <Orders /> }></Route>
       <Route path="/Profile" element={ <Profile /> }></Route>
       <Route path="/Login" element={ <Login /> }></Route>
+      <Route path="/Checkout/:id" element={ <Checkout /> }></Route>
       </Routes>
 
-    </Router>
   </div> ) ;
 }
 
