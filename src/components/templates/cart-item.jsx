@@ -36,7 +36,7 @@ export default function Cart(props) {
             <Card.Title> <b>{props.item.name}</b> </Card.Title>
             <Card.Text>
 
-              <p> With supporting text below as a natural lead-in to additional content.{props.item.desc} </p>
+              <p>{props.item.desc} </p>
 
               Price : {props.item.price} <br />
               Quantity :

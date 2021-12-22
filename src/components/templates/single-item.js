@@ -14,7 +14,33 @@ export default function SingleItem(props) {
 
     const setCartCount = () => {
       setCounter(counter+1);
+
+      addItemToCart();
     };
+
+    function addItemToCart(){
+
+      const data = [{ 'item' : props.item , 'user_id' : '121'}]
+
+      let header = {
+        method : 'POST',
+        mode: 'cors', 
+        body: JSON.stringify(data)
+      }
+
+      fetch(process.env.REACT_APP_URL+"/addItemToCart", header )
+      .then(res => res.json())
+      .then(
+        (result) => {
+           
+         console.log('Item Added To Cart');
+          
+        },
+        (error) => {
+          console.log(error.message)
+        }  
+    );
+    }
     return ( <div>     
               <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={props.item.src} />

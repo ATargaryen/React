@@ -4,7 +4,7 @@ import ItemTemplate from '../templates/single-item';
 export default function Body() {
     
      //item state with default value
-    const [items , setItems] = useState([{ name: 'Ladder', src: './assets/images/p2.png', price: 10, } ]);
+    const [items , setItems] = useState([{ item_id: '212' , name: 'Ladder', src: './assets/images/p2.png', price: 10, } ]);
 
     function processResult(items){
 
@@ -13,9 +13,10 @@ export default function Body() {
       for(var i=0 ; i < items.length ; i++){
 
         const itm = {
-          name: items[i].item_name,
-          src: items[i].item_src,
-          price:items[i].item_price,
+          item_id: items[i].id,
+          name: items[i].name,
+          src: items[i].image,
+          price:items[i].price,
         }
 
         item_array.push(itm)
@@ -38,9 +39,9 @@ export default function Body() {
       }, [])
      // []2nd parameter used mean function run only ones
 
-    return (<>     
+    return (<>
+               <div  className="row p-4" style={{backgroundColor: "#8ED5FA"}} >
                <h2 className="text-center">Hi, I am a Body!</h2>
-               <div  className="row p-4" >
                   {  
                     items.map(function(item, i){ 
                               return (<> 
