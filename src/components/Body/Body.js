@@ -40,7 +40,7 @@ export default function Body() {
      // []2nd parameter used mean function run only ones
 
     return (<>
-               <div  className="row p-4" style={{backgroundColor: "#8ED5FA"}} >
+               <div  className="row p-4" style={{backgroundColor: ' '}} >
                <h2 className="text-center">Hi, I am a Body!</h2>
                   {  
                     items.map(function(item, i){ 

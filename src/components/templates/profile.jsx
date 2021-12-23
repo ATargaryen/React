@@ -1,12 +1,32 @@
 import { Button, Card, Row, Col, Form, Stack, Container } from 'react-bootstrap';
+import React, {useEffect , useState} from 'react';
 
-
+import { SocialIcon } from 'react-social-icons';
 export default function Profile() {
+
+    const iconStyle = {
+        height: 25,
+        width: 25,
+        margin : '2px',
+    }
+
+    var [ profileButtonText , setProfileButtonText] = useState("Add To Cart");
+    var [ profileButtonVariant , setProfileButtonVariant] = useState("secondary");
+
+    function updateProfile(e){
+        e.preventDefault(); 
+        setProfileButtonVariant('success')
+        setProfileButtonText('Updated')
+    }
+
     return (<div>
 
-        <Container className="bg-basic m-4">
+        <Container className="m-4">
             <h2>This is Profile Page</h2>
-            <Card style={{ width: '70%' }}>
+
+            <Row>
+                <Col sm={8} className=''>
+                <Card style={{ width: '100%' }}>
                 <Card.Body>
                     <Card.Title className='p-2'>User Profile</Card.Title>
                     <Form>
@@ -57,14 +77,51 @@ export default function Profile() {
                                 <Form.Control type="email" placeholder='Zip Code' />
                             </Col>
                         </Row>
-                        <Button variant="secondary" type="submit" className='float-end mt-4 btn-lg'>
-                            Update Profile
+                        <Button variant={profileButtonVariant} onClick={updateProfile} type="submit" className='float-end mt-4 btn-lg'>
+                            {profileButtonText}
                         </Button>
 
                     </Form>
                 </Card.Body>
             </Card>
 
+                </Col>
+                <Col sm={4}>
+
+                    <Card>
+                    <Card.Body>
+                   <img class="card-img-top" src="https://i.imgur.com/K7A78We.jpg" alt="Card image cap"/>
+
+                    <div class="pro-img text-center " style={{ margin : '-80px'}} >
+                       <img className='rounded-circle w-25  border border-dark border-1' src="https://i.imgur.com/8RKXAIV.jpg" alt="user"/>
+                    </div>
+
+                    <div className="text-center" style={{ margin : '80px'}}>
+                    <Card.Text className='p-2 text-red'>Aman Chaudhary</Card.Text>
+
+                    <Card.Text className='p-2 text-bold'>YOUNGMAN , INDIA</Card.Text>
+                    </div>
+
+
+                
+                    <div className='pt-3 d-flex justify-content-center' > 
+                    
+                    <hr />
+                    <ul class="social-list d-flex" style={{ listStyle : 'none'}}>
+                        <li> <SocialIcon url="https://twitter.com"  style={ iconStyle } bgColor="Grey"/></li>
+                        <li> <SocialIcon url="https://www.facebook.com/"  style={ iconStyle } bgColor="Grey" /></li>
+                        <li> <SocialIcon url="https://instagram.com" style={ iconStyle } bgColor="Grey" /></li>
+                        <li> <SocialIcon url="https://pinterest.com" style={ iconStyle }  bgColor="Grey" /></li>
+                    </ul>
+        
+                    </div>
+
+                    
+                    </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            
         </Container>
 
 

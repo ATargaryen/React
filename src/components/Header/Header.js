@@ -5,9 +5,7 @@ import Orders from '../templates/orders';
 import Profile from '../templates/profile';
 import Checkout from '../templates/checkout';
 import BodyComponent from '../Body/Body';
-import { Container } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
+import { Container , Row , Col , Dropdown } from 'react-bootstrap';
 import {
   Routes,
   Route,
@@ -47,12 +45,22 @@ function Header() {
                 </div>
            </Col>
            <Col className="p-3"  sm={2} >
-           <Link to="/Login"> <FontAwesomeIcon size="2x" icon={faSignInAlt}  color="grey  " />  </Link>
+           {/* <Link to="/Login"> <FontAwesomeIcon size="2x" icon={faSignInAlt}  color="grey  " />  </Link> */}
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary" size='sm'>
+             Aman Chaudhary
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item ><Link className='text-black' to="/Login" style={{ textDecoration:'none'}}>Sign Out</Link></Dropdown.Item>
+              <Dropdown.Item ><Link className='text-black' to="/Profile" style={{ textDecoration:'none'}} >Settings</Link></Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
             </Col>
            </Row>
           </Container>    
 
-      <Container className='container-fluid mt-4'>
+      <Container className='container-fluid' style={{ marginTop : '80px'}}>
       <Routes>
       <Route path="/" element={ <Home /> }></Route>
       <Route path="/Store" element={ <BodyComponent /> }></Route>

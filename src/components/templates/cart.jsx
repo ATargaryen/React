@@ -40,7 +40,7 @@ export default function Cart(props) {
 
     useEffect(() => {
 
-        const data = [{user_id :process.env.REACT_APP_USER_ID }];
+        const data = {user_id :process.env.REACT_APP_USER_ID };
         let header = {
             method : 'POST',
             mode: 'cors', 

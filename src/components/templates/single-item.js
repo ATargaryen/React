@@ -4,7 +4,7 @@ import { Card } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRupeeSign } from '@fortawesome/free-solid-svg-icons'
+import { faRupeeSign , faCheck } from '@fortawesome/free-solid-svg-icons'
 
 export default function SingleItem(props) {
 
@@ -12,8 +12,15 @@ export default function SingleItem(props) {
    var [ counter , setCounter] = useState(0);
 
 
+   var [ cartButtonText , setCartButtonText] = useState("Add To Cart");
+   var [ cartButtonVariant , setCartButtonVariant] = useState("primary");
+
+
     const setCartCount = () => {
       setCounter(counter+1);
+
+      setCartButtonText('Carted')
+      setCartButtonVariant('success')
 
       addItemToCart();
     };
@@ -49,7 +56,7 @@ export default function SingleItem(props) {
                   <Card.Text>
                   <FontAwesomeIcon icon={  faRupeeSign }  color="black" />    {props.item.price } { counter  }
                   </Card.Text>
-                  <Button onClick={ setCartCount } variant="primary">Add To Cart</Button>
+                  <Button onClick={ setCartCount } variant={cartButtonVariant}> { cartButtonText }  { cartButtonText == "Carted" ?  <FontAwesomeIcon size="1x" icon={faCheck}  color="white" />  : ""  }  </Button>
                 </Card.Body>
               </Card>
                           

@@ -1,12 +1,15 @@
 import React, { Form , useEffect , useState} from 'react';
 import {
-  useParams
+  useParams , useNavigate  
 } from "react-router-dom";
 import { Container, Row, Col, Button, Figure , Accordion , Stack} from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 export default function Checkout() {
 
   let { id } = useParams();
+  let navigate = useNavigate();
 
   const [checkOutItem , setcheckOutItem] = useState([
     { id:'212' , name: 'default',  src: './assets/images/p2.png', price: 10 , quantity:4 , desc : 'default desc'  , color: 'yellow' , gst : '18' ,total_amt : '7020'}]);
@@ -23,7 +26,13 @@ export default function Checkout() {
 
   });
 
-   const [ paymentFlag , setPaymentFlag] = useState(false);
+   const [paymentFlag , setPaymentFlag] = useState(false);
+   const [formSubmitBtnTxt , setFormSubmitBtnTxt] = useState('SUBMIT DELIVERY ADDRESS');
+   const [formSubmitBtnVariant , setFormSubmitBtnVariant] = useState('dark');
+   const [formSubmitBtnDisabled , setFormSubmitBtnDisabled] = useState(false);
+
+
+   const [orderId , setOrderId] = useState('0');
 
 
 
@@ -32,28 +41,36 @@ export default function Checkout() {
     const item_array = [];
 
       const itm = {
-        id: res.item_name,
-        name: res.item_name,
-        src: res.item_src,
-        price:res.item_price,
-        quantity:res.item_qty,
-        desc:res.item_desc,
-        color:res.item_color,
-        gst:res.item_gst,
-        total_amt:res.item_total,
+        id: res.id,
+        name: res.name,
+        src: res.image,
+        price:res.price,
+        quantity:res.quantity,
+        desc:res.desc,
+        color:res.color,
+        gst: res.gst,
+        total_amt:res.total_amt,
       }
 
       item_array.push(itm)
       setcheckOutItem(item_array)  
   }
 
+  const data = [{user_id : process.env.REACT_APP_USER_ID ,item_id : id  }];
+
+  let header = {
+      method : 'POST',
+      mode: 'cors', 
+      body: JSON.stringify(data)
+  }
+
   // get cart item with id
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/getCartItem/"+id)
+    fetch("http://127.0.0.1:8000/getCartItem", header)
       .then(res => res.json())
       .then(
         (result) => {
-          processResult(result)
+          processResult(result[0])
         },
         (error) => {
           console.log(error.message)
@@ -64,26 +81,72 @@ export default function Checkout() {
   function submitCustomerForm(e){
 
     // store customer details on server
-    console.log('Payment Flag '+paymentFlag);
+
     e.preventDefault();  // restrict form default functionality
+
+    const data = [{user_id : process.env.REACT_APP_USER_ID ,item_id : id ,item_qty : checkOutItem[0].quantity , form_data : customerDetails }];
 
       let header = {
         method : 'POST',
         mode: 'cors', 
-        body: JSON.stringify(customerDetails)
+        body: JSON.stringify(data)
       }
       fetch("http://127.0.0.1:8000/submitCustomerShippingForm", header )
         .then(res => res.json())
         .then(
           (result) => {
-            if(result === true){
-              setPaymentFlag(true) ; console.log('Payment Flag '+paymentFlag); }else{ console.log('Customer Details Form Not Submitted Correctly') ;}
-            
+            if(result.result){
+              setOrderId(result.data[0].order_id)
+              setPaymentFlag(true);
+              setFormSubmitBtnTxt('SUCCESSFULLY SUBMITTED');
+              setFormSubmitBtnVariant('success')
+              setFormSubmitBtnDisabled(true)
+            }
+              else{ console.log('Customer Details Form Not Submitted Correctly') ;
+            }
+              
           },
           (error) => {
             console.log(error.message)
           }  
       );
+  }
+
+
+  function doPayment(){
+
+    
+    if(orderId == 0){
+      alert('Submit Delivery Form First.');
+      return true;
+    }
+
+    const data = {order_id : orderId };
+
+    let header = {
+      method : 'POST',
+      mode: 'cors', 
+      body: JSON.stringify(data)
+    }
+    fetch("http://127.0.0.1:8000/doPaymentForOrder", header )
+      .then(res => res.json())
+      .then(
+        (result) => {
+          if(result === true){
+            alert('Payment Done');
+
+    
+            navigate("/Orders")
+            
+          }
+            else{ console.log('Payment Failed') ;
+          }
+            
+        },
+        (error) => {
+          console.log(error.message)
+        }  
+    );
   }
 
 
@@ -154,6 +217,7 @@ export default function Checkout() {
     <Accordion.Body>
     <Stack gap={3} className="col mx-auto p-4">
     <form onSubmit={submitCustomerForm}>
+
       <div className='m-4'>
         <input type="text" className='form-control' name="customer_name" value={customerDetails.customer_name}  onChange={ handleNameInputChange } placeholder="Enter Your Name"  required />
       </div>
@@ -185,7 +249,7 @@ export default function Checkout() {
         </address>
 
         <div className='d-grid p-5'>
-        <Button type="submit" size="lg" variant="dark">SUBMIT DELIVERY ADDRESS</Button>
+        <Button type="submit" size="lg" disabled={ formSubmitBtnDisabled } variant={formSubmitBtnVariant}> {formSubmitBtnTxt} { paymentFlag == true ?  <FontAwesomeIcon size="1x" icon={faCheck}  color="white" />  : ""  }</Button>
         </div>
       </div>
 
@@ -244,7 +308,7 @@ src="../assets/images/p2.png"
             <label htmlFor="item_name">Quantity :</label>  <span>{ checkOutItem[0].quantity }</span>
           </div>
           <div className="item_name m-4">
-            <label htmlFor="item_name">Gst % :</label>  <span>{ checkOutItem[0].gst }</span>
+            <label htmlFor="item_name">Gst :</label>  <span>{ checkOutItem[0].gst } % </span>
           </div>
           <div className="item_name m-4">
             <label htmlFor="item_name">TOTAL AMOUNT :</label>  <span>{ checkOutItem[0].total_amt }</span>
@@ -252,7 +316,7 @@ src="../assets/images/p2.png"
           <div className='d-grid p-5 text-center"'>
 
 
-          <Button size="md" variant="success" >DO PAYMENT</Button>
+          <Button size="md" onClick={ ()=>{ doPayment() }} variant="success" disabled={!formSubmitBtnDisabled} >DO PAYMENT</Button>
          </div>
       </div>
     </Accordion.Body>
