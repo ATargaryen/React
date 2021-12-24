@@ -5,7 +5,7 @@ import Orders from '../templates/orders';
 import Profile from '../templates/profile';
 import Checkout from '../templates/checkout';
 import BodyComponent from '../Body/Body';
-import { Container , Row , Col , Dropdown } from 'react-bootstrap';
+import { Container , Row , Col , Dropdown, Button } from 'react-bootstrap';
 import {
   Routes,
   Route,
@@ -16,7 +16,14 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSignInAlt , faCartArrowDown } from '@fortawesome/free-solid-svg-icons'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { login , logout } from '../../features/User';
+
 function Header() {
+
+  // useSelector , useDispatch hook used to communicate with redux store
+  const user = useSelector((state) => state.user.value)
+  const dispatch = useDispatch()
 
   const linkStyle = {
     textDecoration: "none",
@@ -48,7 +55,7 @@ function Header() {
            {/* <Link to="/Login"> <FontAwesomeIcon size="2x" icon={faSignInAlt}  color="grey  " />  </Link> */}
           <Dropdown>
             <Dropdown.Toggle variant="secondary" size='sm'>
-             Aman Chaudhary
+             {user.name} 
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
@@ -73,7 +80,11 @@ function Header() {
 
       </Container>
 
-
+      <Button
+          onClick={() => dispatch(logout())}
+        >
+          Change User Name
+        </Button>
 
   </div> ) ;
 }
