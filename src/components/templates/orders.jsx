@@ -1,6 +1,7 @@
 import React, { Form , useEffect , useState} from 'react';
 import { Stack  } from 'react-bootstrap';
 import { Button, Table } from 'react-bootstrap';
+import { useExcelDownloder } from 'react-xls';
 
 
 export default function Orders() {
@@ -15,6 +16,23 @@ export default function Orders() {
         body: JSON.stringify(data)
     }
 
+    const { ExcelDownloder, Type } = useExcelDownloder();
+
+    const dataa = {
+      // Worksheet named animals
+      Orders : [
+        { name: 'cat', category: 'animal' },
+        { name: 'dog', category: 'animal' },
+        { name: 'pig', category: 'animal' },
+      ],
+      // Similar you can add more Wworksheet 
+      // pokemons: [
+      //   { name: 'pikachu', category: 'pokemon' },
+      //   { name: 'Arbok', category: 'pokemon' },
+      //   { name: 'Eevee', category: 'pokemon' },
+      // ],
+    };
+  
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/getUserOrders", header)
@@ -46,14 +64,15 @@ export default function Orders() {
         }
   
         setOrders(orders_array) 
-        
-        console.log(orders_array);
     }
 
       
     return (<div>
         <div className="m-4">
             <h2 className="m-4">This is Order Page</h2>
+
+            <ExcelDownloder data={dataa} filename={'orders'}  className='float-end'  type={Type.Link} > Report  </ExcelDownloder>
+
             <Table striped bordered hover size="lg">
                 <thead>
                     <tr>
