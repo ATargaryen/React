@@ -5,6 +5,7 @@ import Orders from '../templates/orders';
 import Profile from '../templates/profile';
 import Checkout from '../templates/checkout';
 import BodyComponent from '../Body/Body';
+import Analytics from '../templates/analytics';
 import { Container , Row , Col , Dropdown, Button } from 'react-bootstrap';
 import {
   Routes,
@@ -47,6 +48,7 @@ function Header() {
                      
                    <div>  <Link to="/Orders" className="text-grey p-4" style={linkStyle}>Orders</Link>  </div> 
                    <div>  <Link to="/Profile" className="text-grey p-4" style={linkStyle}>Profile</Link> </div>  
+                   <div>  <Link to="/analytics" className="text-grey p-4" style={linkStyle}>Analytics</Link> </div>  
                     
                 
                 </div>
@@ -76,6 +78,7 @@ function Header() {
       <Route path="/Profile" element={ <Profile /> }></Route>
       <Route path="/Login" element={ <Login /> }></Route>
       <Route path="/Checkout/:id" element={ <Checkout /> }></Route>
+      <Route path="/analytics" element={ <Analytics /> }></Route>
       </Routes>
 
       </Container>
